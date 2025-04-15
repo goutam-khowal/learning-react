@@ -39,7 +39,11 @@ function AxiosExample() {
         setData((prev) => [response.data, ...prev]);
         console.log("Item added: ", response.data);
       } catch (error) {
+      if(error instanceof Error){
         console.log("Error posting data:", error.message);
+      }
+      else {
+        console.log('Unknown error', error);
       }
     }
 
