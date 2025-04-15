@@ -1,0 +1,7 @@
+.input-bg {
+    background-color: aliceblue;
+    color: black;
+    outline: double 5px rgb(152, 152, 255);
+    border-radius: 8px;
+    box-shadow: 1px 1px 10px inset #333;
+}
