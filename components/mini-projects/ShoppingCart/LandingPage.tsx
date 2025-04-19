@@ -8,6 +8,7 @@ import {
 } from "@/utils/useLocalStorageWithExpiry";
 import { productsList } from "./products";
 import axios from "axios";
+import CartSideBar from "./CartSideBar";
 
 async function getData() {
   const response = await axios.get(
@@ -17,8 +18,10 @@ async function getData() {
   return data;
 }
 
-function ShoppingCart() {
-  const [cartCount, setCartCount] = useState(10);
+function LandingPage() {
+  const [cartCount, setCartCount] = useState(0);
+  const [nItemsInCart, setNItemsInCart] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [currencyData, setCurrencyData] = useState(null);
 
@@ -71,18 +74,24 @@ function ShoppingCart() {
   }
 
   return (
-    <div className="my-4 w-[300px] sm:w-[620px] md:w-[740px] lg:w-[85%] 2xl:w-[1300px] bg-white flex flex-col rounded mx-auto text-black font-serif rounded-t-3xl rounded-b-xl">
+    <div className="my-4 w-[300px] sm:w-[620px] md:w-[740px] lg:w-[85%] 2xl:w-[1300px] bg-white flex flex-col rounded mx-auto text-black font-serif rounded-t-3xl rounded-b-xl overflow-hidden">
       <div className="w-full bg-[#232f3e] text-white rounded-t-3xl py-5">
         <h1 className="text-xl md:text-3xl text-center font-bold">
           Project 4: Shopping Cart
         </h1>
       </div>
+
       <nav className="bg-[#131921] flex items-center h-20 px-4 justify-between">
         <h1 className="text-2xl font-semibold text-white">
           <span className="text-[#FF9900]">shop</span>
           <span className="text-white">.E</span>
         </h1>
-        <button className="relative flex rounded-xl hover:opacity-100 opacity-90 hover:scale-105 w-12 transition-all duration-200 hover:border-1  hover:border-white rounded-2xl items-center justify-center">
+        <button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+          className="relative flex rounded-xl hover:opacity-100 opacity-90 hover:scale-105 w-12 transition-all duration-200 hover:border-1  hover:border-white rounded-2xl items-center justify-center"
+        >
           <img
             className="w-full cursor-pointer m-0 p-0 flex fill-[#FF9900]"
             src={"cart.svg"}
@@ -95,6 +104,14 @@ function ShoppingCart() {
           )}
         </button>
       </nav>
+      {/* Sidebar */}
+      <CartSideBar
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        cartCount={cartCount}
+        nItemsInCart={nItemsInCart}
+        setNItemsInCart={setNItemsInCart}
+      />
       <div className="grid sm:grid-cols-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center px-10 gap-4 p-4">
         {productsList.map((product) => (
           <ShopItem
@@ -114,7 +131,7 @@ function ShoppingCart() {
   );
 }
 
-export default ShoppingCart;
+export default LandingPage;
 
 // "use client";
 
@@ -122,7 +139,7 @@ export default ShoppingCart;
 // import ShopItem from "./ShopItem";
 // import { productsList } from "./products";
 
-// function ShoppingCart() {
+// function LandingPage() {
 //   const [cartCount, setCartCount] = useState(10);
 
 //   return (
@@ -169,4 +186,4 @@ export default ShoppingCart;
 //   );
 // }
 
-// export default ShoppingCart;
+// export default LandingPage;
